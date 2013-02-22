@@ -1,0 +1,86 @@
+@import "grid";
+
+//In this sample we show how to create grids for 
+//mobile, small tablets (iphone-landscape), tablets and desktops.
+//You can create any type of grid you like and you only need 
+//the following values.
+// 1. Min size for the grid.
+// 2. Max size for the grid
+// 3. Maximum number of columns for your grid up to 24 columns. 
+//    If you only create a 5 column layout then you should pass that in as it will save on performance.
+// 4. Gutter size 
+//    Gutters are not automatically added to columns you need to explicity set the class to one of the gutter classes
+// 5. Start creating your grids! They need to be from smallset to largest.
+
+
+//Setup breakpoint for our grids
+// $mobile: 320px !default;//Not needed.
+$smallTabletMinSize:400px;
+$tabletMinSize:600px;
+$desktopMinSize:800px;
+
+//Max width for our grids.
+//We can set just one value for all grids as we want them to stretch but 
+//if you design needs a max size you Can set it.
+
+$mobileGridMaxWidth:1100px;
+$tabletGridMaxWidth:1100px;
+$desktopGridMaxWidth:1100px;
+
+//Columns for each layout.
+$mobileMaxColumns:5;
+$tabletMaxColumns:12;
+$desktopMaxColumns:12;
+
+//Gutter sizes that we can add to our designs.
+$mobileGutter:5px;
+$tabletGutter:10px;
+$desktopGutter:10px;
+
+//Start with Smallest screen first.
+@media only screen and (min-width: 0) {
+  @if( $gridDebug )
+	{
+		body{
+			background: white !important;	
+		}
+	}
+	//class will be 'mobile-XXX';
+	@include createGrid('mobile', $mobileMaxColumns, $mobileGridMaxWidth, $mobileGutter );
+}
+
+//Next screen size.
+@media only screen and (min-width: $smallTabletMinSize) {
+ 	@if( $gridDebug )
+	{
+		body{
+			background: orange !important;	
+		}
+	}
+  //class will be 'tablet-XXX';
+ 	@include createGrid('tablet', $tabletMaxColumns, $tabletGridMaxWidth, $tabletGutter);
+}
+
+//Next screen size. //Special case iphone-landscape
+@media only screen and (min-width: $smallTabletMinSize) and (max-width: $tabletMinSize) {
+ 	@if( $gridDebug )
+	{
+		body{
+			background: purple !important;	
+		}
+	}
+  //class will be 'iphone-landscape-XXX';
+ 	@include createGrid('iphone-landscape', $tabletMaxColumns, $tabletGridMaxWidth, $tabletGutter);
+}
+
+//largest screensize.
+@media only screen and (min-width: $desktopMinSize) {
+	@if( $gridDebug )
+	{
+		body{
+			background: yellow !important;	
+		}
+	}
+  //class will be 'desktop-XXX';
+	@include createGrid('desktop', $desktopMaxColumns, $desktopGridMaxWidth, $desktopGutter);
+}
